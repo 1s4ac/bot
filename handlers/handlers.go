@@ -20,22 +20,16 @@ func MessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.Author.ID == s.State.User.ID {
 		return
 	}
-
-	if m.Content == "!fact on" {
-		factState = true
-		s.ChannelMessageSend(m.ChannelID, "facts turned on")
-	}
-
-	if m.Content == "!fact off" {
-		factState = false
-		s.ChannelMessageSend(m.ChannelID, "facts turned off")
-	}
-
 	switch m.Content {
 	case "!help", "!commands", "!HELP", "!COMMANDS":
 		s.ChannelMessageSend(m.ChannelID, "> use `!fact on/off` to toggle random facts")
+	case "!fact off":
+		factState = false
+		s.ChannelMessageSend(m.ChannelID, "facts turned off")
+	case "!fact on":
+		factState = true
+		s.ChannelMessageSend(m.ChannelID, "facts turned on")
 	}
-
 }
 
 //RandFact is
